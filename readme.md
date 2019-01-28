@@ -5,13 +5,13 @@
 Single Page Application
 
 ## Admin Panel
-
+<ul>
 Login
 Start Election
 View Election
 Voter, Party List, Positions & Candidate (Create, Read, Update, Delete)
 Manage Account (can upload file through .xlsx file format)
-
+</ul>
 ## Voter Panel
 
 Login using their student id
