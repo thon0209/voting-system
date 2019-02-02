@@ -18,6 +18,7 @@ class CreateElectionTable extends Migration
             $table->string('election_title',50);
             $table->date('start');
             $table->date('end');
+            $table->integer('isActived');
             $table->timestamps();
         });
     }

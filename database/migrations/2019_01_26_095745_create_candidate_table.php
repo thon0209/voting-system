@@ -25,6 +25,9 @@ class CreateCandidateTable extends Migration
             $table->unsignedInteger('party_id');
             $table->foreign('party_id')->references('id')->on('partylist')->onDelete('cascade');
 
+            $table->unsignedInteger('election_id');
+            $table->foreign('election_id')->references('id')->on('election');
+
             $table->timestamps();
         });
     }

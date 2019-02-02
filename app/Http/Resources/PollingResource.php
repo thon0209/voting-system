@@ -17,8 +17,7 @@ class PollingResource extends JsonResource
         return [
             "id" => $this->id,
             "user_id" => $this->user_id,
-            "candidate_id" => $this->candidate_id,
-            "election_id" => $this->election_id,
+            "candidate_id" => $this->candidate_id
         ];
     }
 }

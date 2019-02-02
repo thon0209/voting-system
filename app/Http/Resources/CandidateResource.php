@@ -20,10 +20,12 @@ class CandidateResource extends JsonResource
             "course" => $this->course,
             "position_id" => $this->position_id,
             "party_id" => $this->party_id,
+            "election_id" => $this->election_id,
             
             //Relationship Eloquent
             "position" => $this->position,
-            "party" => $this->party
+            "party" => $this->party,
+            "election" => $this->election,
         ];
     }
 }

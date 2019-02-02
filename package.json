@@ -25,6 +25,7 @@
     "dependencies": {
         "noty": "^3.2.0-beta",
         "sweetalert": "^2.1.2",
+        "vue-progressbar": "^0.7.5",
         "vue-template-compiler": "^2.5.22"
     }
 }

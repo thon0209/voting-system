@@ -60,6 +60,14 @@
                     :key="party.id"
                   >{{party.party_name}}</option>
                 </select>
+                <label for="election">Election</label>
+                <select class="form-control" id="election" v-model="candidate.election_id">
+                  <option
+                    v-for="election in elections"
+                    v-bind:value="election.id"
+                    :key="election.id"
+                  >{{election.election_title}}</option>
+                </select>
               </div>
 
               <button type="submit" class="btn btn-success float-right">Save</button>
@@ -79,6 +87,7 @@
                 <th scope="col">Candidate</th>
                 <th scope="col">Position</th>
                 <th scope="col">Party List</th>
+                <th scope="col">Election</th>
                 <th scope="col">Action</th>
               </tr>
             </thead>
@@ -88,6 +97,7 @@
                 <td>{{candidate.full_name}} {{candidate.course}}</td>
                 <td>{{candidate.position.position}}</td>
                 <td>{{candidate.party.party_name}}</td>
+                <td>{{candidate.election.election_title}}</td>
                 <td>
                   <button
                     type="button"
@@ -118,6 +128,7 @@ export default {
     return {
       candidates: [],
       positions: [],
+      elections: [],
       parties: [],
       errors: [],
       isEdit: false,
@@ -126,7 +137,8 @@ export default {
         full_name: "",
         course: "",
         position_id: "",
-        party_id: ""
+        party_id: "",
+        election_id: ""
       },
       image: ""
     };
@@ -135,27 +147,33 @@ export default {
     this.loadCandidate();
     this.loadPosition();
     this.loadPartyList();
+    this.loadElection();
   },
   methods: {
     loadCandidate() {
-      axios.get("./api/candidates").then(response => {
+      axios.get("../api/candidates").then(response => {
         this.candidates = response.data.data;
       });
     },
+    loadElection() {
+      axios.get("../api/get-election").then(response => {
+        this.elections = response.data.elections;
+      });
+    },
     loadPosition() {
-      axios.get("./api/get-position").then(response => {
+      axios.get("../api/get-position").then(response => {
         this.positions = response.data.positions;
       });
     },
     loadPartyList() {
-      axios.get("./api/get-party").then(response => {
+      axios.get("../api/get-party").then(response => {
         this.parties = response.data.parties;
       });
     },
     addCandidate() {
       if (this.isEdit === false) {
         axios
-          .post("./api/candidates", this.candidate)
+          .post("../api/candidates", this.candidate)
           .then(response => {
             method: "post";
             this.candidates.push(response.data.data);
@@ -169,7 +187,8 @@ export default {
               full_name: "",
               course: "",
               position_id: "",
-              party_id: ""
+              party_id: "",
+              election_id: ""
             };
             this.loadCandidate();
             this.errors = "";
@@ -179,7 +198,7 @@ export default {
           });
       } else {
         axios
-          .patch("./api/candidates/" + this.candidate.id, this.candidate)
+          .patch("../api/candidates/" + this.candidate.id, this.candidate)
           .then(response => {
             method: "put";
             this.candidates.push(response.data.data);
@@ -193,7 +212,8 @@ export default {
               full_name: "",
               course: "",
               position_id: "",
-              party_id: ""
+              party_id: "",
+              election_id: ""
             };
             this.isEdit = false;
             this.loadCandidate();
@@ -217,7 +237,8 @@ export default {
         full_name: "",
         course: "",
         position_id: "",
-        party_id: ""
+        party_id: "",
+        election_id: ""
       };
     },
     deleteCandidate(candidate) {
@@ -231,7 +252,7 @@ export default {
       }).then(willDelete => {
         if (willDelete) {
           axios
-            .delete("./api/candidates/" + candidate.id)
+            .delete("../api/candidates/" + candidate.id)
             .then(response => {
               let index = this.candidates.indexOf(candidate);
               this.candidates.splice(index, 1);

@@ -36,6 +36,15 @@
                 <label for="position">End Date</label>
                 <input type="date" v-model="election.end" class="form-control" id="position">
               </div>
+              <div class="form-group">
+                <label for="isActived">Active</label>
+                <select v-model="election.isActived" class="form-control">
+                  <option
+                    v-for="isActivedOption in isActivedOptions"
+                    v-bind:value="isActivedOption.value"
+                  >{{isActivedOption.text}}</option>
+                </select>
+              </div>
               <button type="submit" class="btn btn-primary float-right">Save</button>
             </form>
             <button @click="cancel()" class="btn btn-info text-white">Cancel</button>
@@ -52,6 +61,7 @@
                 <th scope="col">Election</th>
                 <th scope="col">Start</th>
                 <th scope="col">End</th>
+                <th scope="col">Active</th>
                 <th scope="col">Action</th>
               </tr>
             </thead>
@@ -61,6 +71,8 @@
                 <td>{{election.election_title}}</td>
                 <td>{{election.start}}</td>
                 <td>{{election.end}}</td>
+                <td v-if="election.isActived == 0">Yes</td>
+                <td v-else>No</td>
                 <td>
                   <button type="button" @click="editElection(election)" class="btn btn-primary">Edit</button>
                   <button
@@ -92,8 +104,13 @@ export default {
       election: {
         election_title: "",
         start: "",
-        end: ""
-      }
+        end: "",
+        isActived: ""
+      },
+      isActivedOptions: [
+        { text: "No", value: "1" },
+        { text: "Yes", value: "0" }
+      ]
     };
   },
   mounted() {
@@ -101,14 +118,14 @@ export default {
   },
   methods: {
     loadElection() {
-      axios.get("./api/elections").then(response => {
+      axios.get("../api/elections").then(response => {
         this.elections = response.data.data;
       });
     },
     addElection() {
       if (this.isEdit === false) {
         axios
-          .post("./api/elections", this.election)
+          .post("../api/elections", this.election)
           .then(response => {
             method: "post";
             this.elections.push(response.data.data);
@@ -121,7 +138,8 @@ export default {
             this.election = {
               election_title: "",
               start: "",
-              end: ""
+              end: "",
+              isActived: ""
             };
             this.loadElection();
             this.errors = "";
@@ -131,7 +149,7 @@ export default {
           });
       } else {
         axios
-          .patch("./api/elections/" + this.election.id, this.election)
+          .patch("../api/elections/" + this.election.id, this.election)
           .then(response => {
             method: "put";
             this.elections.push(response.data.data);
@@ -144,7 +162,8 @@ export default {
             this.election = {
               election_title: "",
               start: "",
-              end: ""
+              end: "",
+              isActived: ""
             };
             this.isEdit = false;
             this.loadElection();
@@ -167,7 +186,8 @@ export default {
       this.election = {
         election_title: "",
         start: "",
-        end: ""
+        end: "",
+        isActived: ""
       };
     },
     deleteElection(election) {
@@ -181,7 +201,7 @@ export default {
       }).then(willDelete => {
         if (willDelete) {
           axios
-            .delete("./api/elections/" + election.id)
+            .delete("../api/elections/" + election.id)
             .then(response => {
               let index = this.elections.indexOf(election);
               this.elections.splice(index, 1);

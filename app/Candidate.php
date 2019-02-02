@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Candidate extends Model
 {
     protected $table = "candidates";
-    protected $fillable = ['full_name','course','position_id','party_id'];
+    protected $fillable = ['full_name','course','position_id','party_id','election_id'];
 
     public function position()
     {
@@ -17,6 +17,11 @@ class Candidate extends Model
     public function party()
     {
         return $this->belongsTo('App\PartyList');
+    }
+
+    public function election()
+    {
+        return $this->belongsTo('App\Election');
     }
 
 }

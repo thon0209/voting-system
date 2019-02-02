@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Input;
 use App\Election;
 use App\Http\Resources\ElectionResource as ElectionResource;
 use App\Http\Requests\ElectionRequest;
+use App\Http\Requests\ElectionEditRequest;
 
 class ElectionController extends Controller
 {
@@ -15,6 +16,11 @@ class ElectionController extends Controller
     {
         $election = Election::all();
         return ElectionResource::collection($election);
+    }
+
+    public function getActiveElection()
+    {
+        return response()->json(['elections'=>Election::where('isActived','0')->get()]);
     }
 
     public function store(ElectionRequest $request)
@@ -28,7 +34,7 @@ class ElectionController extends Controller
         }
     }
 
-    public function update(ElectionRequest $request,$id)
+    public function update(ElectionEditRequest $request,$id)
     {
         $validated = $request->validated();
         $election = Election::findOrFail($id);

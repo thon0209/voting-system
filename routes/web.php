@@ -15,12 +15,30 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/users-upload', function () {
-    return view('users-upload.index');
-});
-
-Route::post('/users-import','UserController@import')->name('import');
+// Route::get('/users-upload', function () {
+//     return view('users-upload.index');
+// });
 
 Auth::routes();
 
+Route::middleware(['auth'])->group(function () {
+    Route::get('/voting', function () {
+        return view('voting.index');
+    });
+    Route::get('/setting/election', function () {
+        return view('settings.election.index');
+    });
+    Route::get('/setting/candidate', function () {
+        return view('settings.candidate.index');
+    });
+
+});
+
+
+
+
+
+
+
 Route::get('/home', 'HomeController@index')->name('home');
+

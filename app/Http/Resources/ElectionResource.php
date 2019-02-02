@@ -18,7 +18,8 @@ class ElectionResource extends JsonResource
             "id" => $this->id,
             "election_title" => $this->election_title,
             "start" => $this->start,
-            "end" => $this->end
+            "end" => $this->end,
+            "isActived" => $this->isActived
         ];
     }
 }

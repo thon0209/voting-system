@@ -1,5 +1,6 @@
 <template>
   <div class="container">
+    <vue-progress-bar></vue-progress-bar>
     <h3>Manage Voters</h3>
     <div class="row">
       <div class="col-lg-3 col-md-3">
@@ -109,6 +110,21 @@
         </div>
       </div>
     </div>
+    <div class="row py-3">
+      <div class="col-lg-3 col-md-3">
+        <div class="card">
+          <div class="card-header bg-primary text-white">Upload File (.xlsx)</div>
+          <div class="container py-3">
+            <div v-if="!file">
+              <input type="file" id="file" name="file" ref="file" v-on:change="fileUpload">
+            </div>
+            <div v-else>
+              <input type="submit" value="Upload" @click="submitFile">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 <script>
@@ -127,13 +143,39 @@ export default {
         password: "",
         isAdmin: 0,
         isVoted: 0
-      }
+      },
+      file: ""
     };
   },
   mounted() {
     this.loadUser();
   },
   methods: {
+    fileUpload() {
+      this.file = this.$refs.file.files[0];
+    },
+    submitFile() {
+      let formData = new FormData();
+      formData.append("file", this.file);
+      axios
+        .post("./api/user-upload", formData, {
+          headers: { "Content-Type": "multipart/form-data" },
+          onUploadProgress: function() {
+            this.$Progress.start();
+          }.bind(this)
+        })
+        .then(function() {
+          // this.$Progress.finish();
+          swal(
+            "Good job!",
+            "File has been uploaded. Please refresh the page.",
+            "success"
+          );
+        })
+        .catch(function() {
+          console.log("failed to upload");
+        });
+    },
     loadUser() {
       axios.get("./api/users").then(response => {
         this.users = response.data.data;

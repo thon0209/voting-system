@@ -8,12 +8,13 @@ use Illuminate\Support\Facades\Input;
 use App\Candidate;
 use App\Http\Resources\CandidateResource as CandidateResource;
 use App\Http\Requests\CandidateRequest;
+use App\Http\Requests\CandidateEditRequest;
 
 class CandidateController extends Controller
 {
     public function index()
     {
-        $candidate = Candidate::with('position','party')->get();
+        $candidate = Candidate::with('position','party','election')->get();
         return CandidateResource::collection($candidate);
     }
 
@@ -27,7 +28,7 @@ class CandidateController extends Controller
         }
     }
 
-    public function update(CandidateRequest $request,$id)
+    public function update(CandidateEditRequest $request,$id)
     {
         $validated = $request->validated();
         $candidate = Candidate::findOrFail($id);

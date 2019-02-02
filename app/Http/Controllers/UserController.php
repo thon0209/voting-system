@@ -30,14 +30,16 @@ class UserController extends Controller
 
     public function import(Request $request) 
     {
-        $users=Excel::import(new UsersImport(), $request->file('import_file'));
-        return redirect('users-upload')->with('message','Import file successfully!');
+        $user=Excel::import(new UsersImport(), $request->file('file'));
+        return response()->json(['message' => 'File has been uploaded. Please refresh the page.']);
     }
 
     public function update(Request $request,$id)
     {
         $user = User::findOrFail($id);
         $user->fill(Input::get());
+        $user->isVoted = '0';
+        $user->isAdmin = '0';
         if($user->save())
         {
             return new UserResource($user);

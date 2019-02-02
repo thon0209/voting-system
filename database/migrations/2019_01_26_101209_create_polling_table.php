@@ -20,9 +20,6 @@ class CreatePollingTable extends Migration
             $table->unsignedInteger('candidate_id');
             $table->foreign('candidate_id')->references('id')->on('candidates')->onDelete('cascade');
 
-            $table->unsignedInteger('election_id');
-            $table->foreign('election_id')->references('id')->on('election')->onDelete('cascade');
-
             $table->unsignedInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
 
