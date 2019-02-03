@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use App\User;
 
 class LoginController extends Controller
 {
@@ -37,6 +38,18 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
+    protected function authenticated($request, $user)
+    {
+
+        if($user->isAdmin == '1') {
+           
+            return redirect()->intended('/polling-results');
+        } else {
+            
+            return redirect()->intended('/voting');
+        }
+    }
+
     public function username()
     {
         $loginType = request()->input('username');
@@ -44,4 +57,6 @@ class LoginController extends Controller
         request()->merge([$this->username => $loginType]);
         return property_exists($this, 'username')  ? $this->username  : 'email';
     }
+
+    
 }

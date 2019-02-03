@@ -77,14 +77,14 @@ export default {
   },
   methods: {
     loadParty() {
-      axios.get("./api/parties").then(response => {
+      axios.get("../api/parties").then(response => {
         this.parties = response.data.data;
       });
     },
     addParty() {
       if (this.isEdit === false) {
         axios
-          .post("./api/parties", this.party)
+          .post("../api/parties", this.party)
           .then(response => {
             method: "post";
             this.parties.push(response.data.data);
@@ -105,7 +105,7 @@ export default {
           });
       } else {
         axios
-          .patch("./api/parties/" + this.party.id, this.party)
+          .patch("../api/parties/" + this.party.id, this.party)
           .then(response => {
             method: "put";
             this.parties.push(response.data.data);
@@ -151,7 +151,7 @@ export default {
       }).then(willDelete => {
         if (willDelete) {
           axios
-            .delete("./api/parties/" + party.id)
+            .delete("../api/parties/" + party.id)
             .then(response => {
               let index = this.parties.indexOf(party);
               this.parties.splice(index, 1);

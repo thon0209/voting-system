@@ -14,4 +14,9 @@ class Election extends Model
         return $this->hasMany('App\Candidate');
     }
 
+    protected function polling()
+    {
+        return $this->hasMany('App\Polling');
+    }
+
 }

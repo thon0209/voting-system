@@ -36,3 +36,8 @@ Route::post('/user-upload','UserController@import');
 //Voting
 Route::resource('voting','PollingController');
 
+//Polling Results
+Route::get('polling','PollingController@getResults');
+//Polling Log
+Route::get('polling-log','PollingController@index');
+

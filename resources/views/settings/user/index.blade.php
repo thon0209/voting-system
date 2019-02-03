@@ -4,7 +4,7 @@
 <div class="container">
     @if(Auth::user()->isAdmin === 1)
     <div id="app">
-            <election></election>
+        <users></users>
     </div>
     @else
         <h1>Sorry, you don't permission to access this page!</h1>

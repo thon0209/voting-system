@@ -81,14 +81,14 @@ export default {
   },
   methods: {
     loadPosition() {
-      axios.get("./api/positions").then(response => {
+      axios.get("../api/positions").then(response => {
         this.positions = response.data.data;
       });
     },
     addPosition() {
       if (this.isEdit === false) {
         axios
-          .post("./api/positions", this.position)
+          .post("../api/positions", this.position)
           .then(response => {
             method: "post";
             this.positions.push(response.data.data);
@@ -109,7 +109,7 @@ export default {
           });
       } else {
         axios
-          .patch("./api/positions/" + this.position.id, this.position)
+          .patch("../api/positions/" + this.position.id, this.position)
           .then(response => {
             method: "put";
             this.positions.push(response.data.data);
@@ -155,7 +155,7 @@ export default {
       }).then(willDelete => {
         if (willDelete) {
           axios
-            .delete("./api/positions/" + position.id)
+            .delete("../api/positions/" + position.id)
             .then(response => {
               let index = this.positions.indexOf(position);
               this.positions.splice(index, 1);

@@ -25,6 +25,8 @@ Vue.component("party", require("./components/admin/partylist.vue").default);
 Vue.component("election", require("./components/admin/election.vue").default);
 Vue.component("candidate", require("./components/admin/candidate.vue").default);
 Vue.component("users", require("./components/admin/users.vue").default);
+Vue.component("results", require("./components/admin/results.vue").default);
+Vue.component("vote-log", require("./components/admin/vote-log.vue").default);
 
 import VueProgressBar from "vue-progressbar";
 

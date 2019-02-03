@@ -19,6 +19,11 @@ class Candidate extends Model
         return $this->belongsTo('App\PartyList');
     }
 
+    public function polling()
+    {
+        return $this->hasMany('App\Polling');
+    }
+
     public function election()
     {
         return $this->belongsTo('App\Election');

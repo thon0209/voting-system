@@ -29,6 +29,12 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    public function polling()
+    {
+        return $this->hasMany('App\Polling')->select('created_at');
+    }
+
+
     public function setPasswordAttribute($value)
     {
         if($value){

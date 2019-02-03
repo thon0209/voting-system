@@ -5,24 +5,22 @@
 <div id="app">
   
     <div class="container">
-            @if (Auth::user()->isVoted === 1)
+
             <div class="row justify-content-center">
                 <div class="col-md-8">
                     <div class="card">
                         <div class="card-header">Status</div>     
                         <div class="card-body">
-                            <div class="alert alert-danger" role="alert">
+                            <div class="alert alert-success" role="alert">
                               
-                                    Sorry, <strong>{{Auth::user()->name}}</strong> you have already voted!
+                                    Thank you, <strong>{{Auth::user()->name}}</strong> for voting. Please log out your account.
                               
                             </div>       
                         </div>
                     </div>
                 </div>
             </div>
-            @else
-            <votes></votes>
-        @endif 
+
         </div>
 
     

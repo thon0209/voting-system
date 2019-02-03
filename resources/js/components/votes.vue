@@ -1,11 +1,16 @@
 <template>
   <div class="container">
     <h3>Vote Information</h3>
+    <h6 class="text-danger">
+      Instructions: To vote, click
+      <input type="radio" disabled> round button to the left of your choices, like this:
+      <input type="radio" checked>. VOTE WISELY!
+    </h6>
     <div class="row">
       <div class="col-lg-4 col-md-4">
         <div class="card">
           <div class="container py-3">
-            <form @submit.prevent="addVote" type="POST">
+            <form @submit.prevent="addVote">
               <ul class="list-group">
                 <li class="list-group-item" v-for="position in positions" :key="position.id">
                   <b>{{ position.position }} :</b>
@@ -14,11 +19,6 @@
                       {{cadidate_selected.full_name}}
                       <br>
                       <i>{{cadidate_selected.party.party_name}}</i>
-                      <button
-                        type="submit"
-                        class="btn btn-danger btn-sm float-right"
-                        @click="remove(index)"
-                      >X</button>
                     </div>
                   </div>
                 </li>
@@ -59,7 +59,7 @@
                           :name="position.id"
                           :id="candidate.id"
                           :value="candidate.id"
-                          @click="vote(candidate)"
+                          @change="vote(candidate,position)"
                         >
                       </td>
                       <td>{{candidate.full_name}} ({{candidate.course}})</td>
@@ -79,6 +79,7 @@
 </template>
 
 <script>
+import swal from "sweetalert";
 export default {
   data() {
     return {
@@ -94,37 +95,65 @@ export default {
     this.loadCandidate();
     this.loadParty();
   },
-  computed: {},
   methods: {
-    vote(candidate) {
-      this.selected.push(candidate);
+    vote(candidate, position) {
+      var found = false;
+      for (var i = 0; i < this.selected.length; i++) {
+        if (this.selected[i].position_id === position.id) {
+          var newVote = this.selected[i];
+          found = true;
+          break;
+        }
+      }
+      if (!found) {
+        this.selected.push(candidate);
+      }
     },
     remove(index) {
       this.selected.splice(index, 1);
     },
     addVote() {
-      axios
-        .post("../api/voting", this.selected)
-        .then(response => {
-          method: "post";
-          this.selected.push(response.data.data);
-        })
-        .catch(response => {
-          this.errors = response.response.data.errors;
-        });
+      swal({
+        title: "Are you sure?",
+        text: "Once voted, you will not be able to modify your vote!",
+        icon: "info",
+        buttons: true,
+        dangerMode: true
+      }).then(willDelete => {
+        if (willDelete) {
+          axios
+            .post("././api/voting", this.selected)
+            .then(response => {
+              method: "post";
+              const file = JSON.parse(data);
+              this.selected.json();
+            })
+            .catch(response => {
+              this.errors = response.response.data.errors;
+            });
+          swal("SUCCESS! Your voted has been counted. Thank you!", {
+            icon: "success"
+          });
+          location.replace("././vote-done");
+        } else {
+          swal(
+            "Please press F5 key or press refresh button to reset your vote."
+          );
+        }
+      });
     },
     loadPosition() {
-      axios.get("../api/positions").then(response => {
+      axios.get("././api/positions").then(response => {
         this.positions = response.data.data;
       });
     },
     loadCandidate() {
-      axios.get("../api/candidates").then(response => {
+      axios.get("././api/candidates").then(response => {
         this.candidates = response.data.data;
       });
     },
     loadParty() {
-      axios.get("../api/parties").then(response => {
+      axios.get("././api/parties").then(response => {
         this.parties = response.data.data;
       });
     }

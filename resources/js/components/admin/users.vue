@@ -177,14 +177,14 @@ export default {
         });
     },
     loadUser() {
-      axios.get("./api/users").then(response => {
+      axios.get("../api/users").then(response => {
         this.users = response.data.data;
       });
     },
     addUser() {
       if (this.isEdit === false) {
         axios
-          .post("./api/users", this.user)
+          .post("../api/users", this.user)
           .then(response => {
             method: "post";
             this.users.push(response.data.data);
@@ -211,7 +211,7 @@ export default {
           });
       } else {
         axios
-          .patch("./api/users/" + this.user.id, this.user)
+          .patch("../api/users/" + this.user.id, this.user)
           .then(response => {
             method: "put";
             this.users.push(response.data.data);
@@ -269,7 +269,7 @@ export default {
       }).then(willDelete => {
         if (willDelete) {
           axios
-            .delete("./api/users/" + user.id)
+            .delete("../api/users/" + user.id)
             .then(response => {
               let index = this.users.indexOf(user);
               this.users.splice(index, 1);
