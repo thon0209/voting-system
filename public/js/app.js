@@ -3163,6 +3163,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -3177,6 +3180,9 @@ __webpack_require__.r(__webpack_exports__);
     this.loadVotingLog();
   },
   methods: {
+    pdfReport: function pdfReport() {
+      window.open("././vote-logs/print", "_blank");
+    },
     loadVotingLog: function loadVotingLog() {
       var _this = this;
 
@@ -43033,6 +43039,22 @@ var render = function() {
           _vm._v(" "),
           _vm._m(1)
         ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-4" }, [
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-primary",
+            attrs: { type: "submit" },
+            on: {
+              click: function($event) {
+                _vm.pdfReport()
+              }
+            }
+          },
+          [_vm._v("Print Report")]
+        )
       ])
     ]),
     _vm._v(" "),

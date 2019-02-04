@@ -12,7 +12,6 @@
 */
 
 
-
 // Route::get('/users-upload', function () {
 //     return view('users-upload.index');
 // });
@@ -23,6 +22,7 @@ Auth::routes();
     Route::get('/', function () {
         return view('auth.login');
     });
+
 
 Route::middleware(['auth'])->group(function () {
 
@@ -55,6 +55,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/setting/user', function () {
         return view('settings.user.index');
     });
+
+    Route::get('/vote-logs/print', 'PollingReportsController@pdf');
 
 });
 

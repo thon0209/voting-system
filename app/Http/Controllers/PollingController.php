@@ -6,12 +6,13 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Input;
 use App\Http\Resources\PollingResource as PollingResource;
+use App\Exports\PollingExport;
+use Maatwebsite\Excel\Facades\Excel;
+
 use App\Polling;
 use App\User;
 use App\Candidate;
 use Carbon\Carbon;
-use DB;
-
 
 class PollingController extends Controller
 {
@@ -32,6 +33,12 @@ class PollingController extends Controller
                     ->get();   
         return response()->json(['data'=>$polling]);
     }
+
+    public function export() 
+    {
+         Excel::download(new PollingExport, 'polling-results.xlsx');
+         return response()->json(['message'=>'Export done']);
+    }    
 
     public function store(Request $request)
     {

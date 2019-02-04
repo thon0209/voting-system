@@ -19,6 +19,9 @@
           </div>
         </div>
       </div>
+      <div class="col-4">
+        <button type="submit" @click="pdfReport()" class="btn btn-primary">Print Report</button>
+      </div>
     </div>
     <table class="table table-sm table-striped">
       <thead class="thead-dark">
@@ -93,6 +96,9 @@ export default {
     this.loadVotingLog();
   },
   methods: {
+    pdfReport() {
+      window.open("././vote-logs/print", "_blank");
+    },
     loadVotingLog() {
       axios.get("././api/polling-log").then(response => {
         this.logs = response.data.data;

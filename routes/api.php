@@ -40,4 +40,5 @@ Route::resource('voting','PollingController');
 Route::get('polling','PollingController@getResults');
 //Polling Log
 Route::get('polling-log','PollingController@index');
+Route::get('rptremarks','PollingReportsController@pdf');
 
