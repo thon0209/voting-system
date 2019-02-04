@@ -9,14 +9,15 @@ Single Page Application
 <li>Login</li>
 <li>Start Election</li>
 <li>View Election</li>
+<li>View Polling Results</li>
 <li>Voter, Party List, Positions & Candidate (Create, Read, Update, Delete)</li>
+<li>Generate report for vote logs</li>
 <li>Manage Account (can upload file through .xlsx file format)</li>
 
 ## Voter Panel
 
 <li>Login using their student id</li>
 <li>Vote (Can only access when the election started)</li>
-<li>Result (Can only access when she/he already vote)</li>
 <li>Logout</li>
 
 ## Language used
